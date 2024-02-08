@@ -1,3 +1,5 @@
-<p>login works!</p>
-<input [(ngModel)]="username" type="text" id="username">
-<button (click)="setUsername()">Set Username</button>
+<div class="login-popup" [class.show]="showLoginPopup">
+    <input [(ngModel)]="username" type="text" id="username" placeholder="Enter Username">
+    <button (click)="setUsername()">Join</button>
+  </div>
+  
