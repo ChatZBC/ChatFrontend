@@ -1,0 +1,51 @@
+.container {
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+  grid-template-rows: 6fr 1fr;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+}
+
+.userList {
+  grid-area: 1 / 1 / 3 / 2;
+  background-color: aqua;
+}
+
+.chatContainer {
+  grid-area: 1 / 2 / 3 / 3;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 6fr 1fr;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  background-color: aquamarine;
+}
+
+.messageContainer {
+  grid-area: 1 / 1 / 2 / 2;
+  background-color: blue;
+}
+
+.typingContainer {
+  grid-area: 2 / 1 / 3 / 2;
+  background-color: blueviolet;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.inputMessage{
+    border-radius: 6px;
+    outline: none;
+    width: 85%;
+    height: 80%;
+    padding: 5px;
+}
+
+.sendMessage{
+    border-radius: 6px;
+    width: 10%;
+    height: 80%;
+}

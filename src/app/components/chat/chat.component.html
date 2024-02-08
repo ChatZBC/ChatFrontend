@@ -1,1 +1,15 @@
-<p>chat works!</p>
+<div class="container">
+    <div class="userList">
+
+    </div>
+    <div class="chatContainer">
+        <div class="messageContainer">
+            <div *ngFor="let message of getMessages()">{{message}}</div>
+        </div>
+        <div class="typingContainer">
+            <!-- <input class="inputMessage" type="text" name="sendMessage" > -->
+            <textarea class="inputMessage" required [(ngModel)]="messageText"></textarea>
+            <button class="sendMessage" (click)="SendMessageTest()">SendMessage</button>
+        </div>
+    </div>
+</div>

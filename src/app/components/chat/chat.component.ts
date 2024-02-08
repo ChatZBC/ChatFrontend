@@ -1,32 +1,49 @@
 import { Component, OnInit } from '@angular/core';
-
+import {
+  DefaultHttpClient,
+  HttpTransportType,
+  HubConnection,
+  HubConnectionBuilder,
+} from '@microsoft/signalr';
 import { DataService } from '../../services/data.service';
+import { MessagesService } from '../../services/messages.service';
 
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
-  styleUrl: './chat.component.css'
+  styleUrl: './chat.component.css',
 })
 export class ChatComponent implements OnInit {
-  messages!: string[];
   messageText: string = '';
-  userlist!: string[];
+  messageHistory: string[] = [];
+  hubconnection?: HubConnection;
 
-  constructor(private dataService: DataService) { }
+  constructor(private dataService: DataService, private messagesService: MessagesService) {}
 
   ngOnInit(): void {
-    this.dataService.startConnection();
+    console.log('Connected');
 
+    this.dataService.JoinHub();
   }
 
-  public SendMessage() {
-    this.dataService.SendMessage(this.messageText)
+  SendMessageTest() {
+    if (this.messageText && this.messageText.trim() !== '') {
+      // Check if messageText is not empty
+      this.dataService.SendMessage(this.messageText);
+      this.messageText = ''; // Clear messageText after sending the message
+    } else {
+      console.error('Error: no text');
+    }
   }
 
-
-  public RequestUserlist(){
-    this.userlist = this.dataService.RequestUserList();
+  getMessages(): string[] {
+    return this.messagesService.messages;
   }
+  // public SendMessage() {
+  //   this.dataService.SendMessage(this.messageText)
+  // }
+
+  // public RequestUserlist(){
+  //   this.userlist = this.dataService.RequestUserList();
+  // }
 }
-
-
