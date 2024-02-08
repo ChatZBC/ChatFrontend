@@ -8,6 +8,7 @@ import * as SignalR from '@microsoft/signalr'
 })
 export class DataService {
   private hubConnection: SignalR.HubConnection;
+  username = 'Test';
 
   constructor() {
     this.hubConnection = new SignalR.HubConnectionBuilder()
