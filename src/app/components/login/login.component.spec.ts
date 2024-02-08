@@ -31,7 +31,7 @@ describe('LoginComponent', () => {
 
   //Checks if the username is set correctly
   it('should set username', () => {
-    const expectedUsername = 'Test';
+    const expectedUsername = 'TestUser';
     component.username = expectedUsername;
 
     component.setUsername();
