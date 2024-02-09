@@ -1,1 +1,7 @@
-<p>login works!</p>
+<div class="login-popup" [class.show]="showLoginPopup">
+  <div *ngIf="invalidUsername" class="error-message">
+    Invalid Username
+  </div>
+  <input [(ngModel)]="username" type="text" id="username" placeholder="Enter Username">
+  <button (click)="setUsername()">Join</button>
+</div>
