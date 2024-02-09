@@ -1,5 +1,4 @@
-/*
-import { TestBed, async } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { DataService } from './data.service';
 import * as signalR from '@microsoft/signalr'; // Import signalR
 
@@ -7,45 +6,40 @@ describe('DataService', () => {
   let service: DataService;
   let connectionMock: any;
 
-  const mockConnection = jasmine.createSpyObj('DataService',['StartConnection','SendMessage']);
+  const mockConnection = jasmine.createSpyObj('DataService', ['JoinHub', 'SendMessage']);
 
-  beforeEach(()=> TestBed.configureTestingModule({
+  beforeEach(() => TestBed.configureTestingModule({
     providers: [{
       provide: DataService,
       useValue: mockConnection
     }]
   }))
 
-  beforeEach(async(() => {
+  beforeEach((() => {
     TestBed.configureTestingModule({
       providers: [DataService]
     });
     service = TestBed.inject(DataService);
-
-    // Mocking signalR.HubConnectionBuilder
-    connectionMock = {
-      start: jasmine.createSpy('start').and.returnValue(Promise.resolve()),
-      connectionId: 'fake_connection_id'
-    };
-    spyOn(signalR, 'HubConnectionBuilder').and.returnValue({
-      withUrl: jasmine.createSpy('withUrl').and.returnValue({
-        build: jasmine.createSpy('build').and.returnValue(connectionMock)
-      })
-    });
   }));
 
   it('should initiate SignalR connection successfully', async () => {
-    await service.initiateSignalrConnection();
+    await service.JoinHub();
     expect(signalR.HubConnectionBuilder).toHaveBeenCalledWith();
     expect(connectionMock.start).toHaveBeenCalledWith({ withCredentials: false });
     expect(console.log).toHaveBeenCalledWith(`SignalR connection success! connectionId: ${connectionMock.connectionId}`);
+  });
+
+  //Frontend kan få forbindelse til SignalR hub
+  it('Frontend can get connection', () => {
+    const startSpy = spyOn(signalR.HubConnection.prototype, 'start').and.returnValue(Promise.resolve());
+    expect(startSpy).toHaveBeenCalled();
   });
 
   it('should handle connection error', async () => {
     const errorMessage = 'Connection error';
     connectionMock.start.and.returnValue(Promise.reject(errorMessage));
 
-    await service.initiateSignalrConnection();
+    await service.JoinHub();
     expect(signalR.HubConnectionBuilder).toHaveBeenCalledWith();
     expect(connectionMock.start).toHaveBeenCalledWith({ withCredentials: false });
     expect(console.log).toHaveBeenCalledWith(`SignalR connection error: ${errorMessage}`);
@@ -102,11 +96,7 @@ describe('DataService', () => {
   //   expect(hubConnection.start).toHaveBeenCalled();
   // });
 
-  //Frontend kan få forbindelse til SignalR hub.
-  it('Frontend can get connection', () => {
-    const startSpy = spyOn(SignalR.HubConnection.prototype, 'start').and.returnValue(Promise.resolve());
-    expect(startSpy).toHaveBeenCalled();
-  });
+
   // it('Frontend can get connection', () => {
   //   service.SendMessage("Test")
   //   expect(service.SendMessage).toHaveBeenCalled();

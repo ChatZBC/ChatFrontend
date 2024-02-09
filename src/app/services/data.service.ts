@@ -1,4 +1,4 @@
-import { Injectable, ChangeDetectorRef } from '@angular/core';
+import { Injectable } from '@angular/core'; //, ChangeDetectorRef
 import {
   DefaultHttpClient,
   HttpTransportType,
@@ -17,7 +17,7 @@ export class DataService {
 
   constructor(
     private messagesService: MessagesService,
-    private cdr: ChangeDetectorRef
+    //private cdr: ChangeDetectorRef
   ) {
     this.hubUrl = 'https://localhost:7206/chathub?username=' + this.username;
   }
@@ -34,7 +34,7 @@ export class DataService {
         .build();
       this.hubconnection.on('MessageReceived', (user, message) => {
         this.messagesService.addMessage(user + '\n' + message);
-        this.cdr.detectChanges(); // Trigger change detection
+        // this.cdr.detectChanges(); // Trigger change detection
       });
       this.hubconnection.on('userlist', (message) => console.log(message));
       this.hubconnection

@@ -10,7 +10,7 @@
 
 .userList {
   grid-area: 1 / 1 / 3 / 2;
-  background-color: aqua;
+  background-color: rgb(179, 179, 179);
 }
 
 .chatContainer {
@@ -25,12 +25,12 @@
 
 .messageContainer {
   grid-area: 1 / 1 / 2 / 2;
-  background-color: blue;
+  background-color: rgb(197, 197, 204);
 }
 
 .typingContainer {
   grid-area: 2 / 1 / 3 / 2;
-  background-color: blueviolet;
+  background-color: rgb(236, 231, 240);
   display: flex;
   align-items: center;
   justify-content: center;
