@@ -23,8 +23,7 @@ import { MessagesService } from './services/messages.service';
   providers: [
     DataService,
     MessagesService,
-    
-
+    FormsModule
   ],
   bootstrap: [AppComponent]
 })
