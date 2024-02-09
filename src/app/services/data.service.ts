@@ -1,37 +1,53 @@
-import { Injectable } from '@angular/core';
-
-import * as SignalR from '@microsoft/signalr'
-
+import { Injectable } from '@angular/core'; //, ChangeDetectorRef
+import {
+  DefaultHttpClient,
+  HttpTransportType,
+  HubConnection,
+  HubConnectionBuilder,
+} from '@microsoft/signalr';
+import { MessagesService } from './messages.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class DataService {
-  private hubConnection: SignalR.HubConnection;
-  username = 'Test';
+  hubUrl: string;
+  hubconnection?: HubConnection;
+  username = 'TestUser';
 
-  constructor() {
-    this.hubConnection = new SignalR.HubConnectionBuilder()
-    .withUrl('https://localhost:7206/chathub', { withCredentials: false, skipNegotiation: true, transport: SignalR.HttpTransportType.WebSockets })
-    .build();
+  constructor(
+    private messagesService: MessagesService,
+  ) {
+    this.hubUrl = 'https://localhost:7206/chathub?username=' + this.username;
   }
 
-  public data: any;
-
-  public startConnection = () => {
-    this.hubConnection
-      .start()
-      .then(() => console.log('Connection started'))
-      .catch(err => console.log('Error while starting connection' + err))
+  public async JoinHub(): Promise<void> {
+    try {
+      DefaultHttpClient;
+      this.hubconnection = new HubConnectionBuilder()
+        .withUrl(this.hubUrl, {
+          withCredentials: false,
+          skipNegotiation: true,
+          transport: HttpTransportType.WebSockets,
+        })
+        .build();
+      this.hubconnection.on('MessageReceived', (user, message) => {
+        this.messagesService.addMessage(user + '\n' + message);
+        // this.cdr.detectChanges(); // Trigger change detection
+      });
+      this.hubconnection.on('userlist', (message) => console.log(message));
+      this.hubconnection
+        .start()
+        .then(() => console.log('Connnection started'))
+        .catch((err) => console.log(err));
+    } catch (error) {
+      console.log(`SignalR connection error: ${error}`);
+    }
   }
 
-  public MessageReceived = () => {
-    this.hubConnection.on('MessageReceived', (message) => {
-      console.log(message)
-      this.data = message;
-    })
-  }
-  public SendMessage = () => {
-
+  public SendMessage(message: string) {
+    this.hubconnection
+      ?.invoke('SendMessage', this.username, message)
+      .catch((err) => console.log(err)); //.then((message)=>console.log(message))
   }
 }
