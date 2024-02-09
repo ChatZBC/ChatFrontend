@@ -16,7 +16,8 @@ export class DataService {
   username: any;
 
   constructor(private messagesService: MessagesService) {
-    this.hubUrl = 'https://localhost:7206/chathub?username=' + this.SetUsername();
+    // this.hubUrl = 'https://localhost:7206/chathub?username=' + this.SetUsername();
+    this.hubUrl = 'http://192.168.1.246:8080/chatHub?username=' + this.SetUsername();
   }
 
   public SetUsername(): string | null {
