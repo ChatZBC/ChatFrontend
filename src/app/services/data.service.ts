@@ -20,8 +20,14 @@ export class DataService {
     this.hubUrl = 'http://192.168.1.246:8080/chatHub?username=' + this.SetUsername();
   }
 
-  public SetUsername(): string | null {
-    return sessionStorage.getItem('Username');
+  public SetUsername(): string {
+    const userName = sessionStorage.getItem('Username')
+    if (userName == null){
+      return 'Eroor'
+    } else {
+      this.username = userName;
+      return userName;
+    }
   }
 
   public async JoinHub(): Promise<void> {
@@ -35,7 +41,7 @@ export class DataService {
         })
         .build();
       this.hubconnection.on('MessageReceived', (user, message) => {
-        this.messagesService.addMessage(user + '\n' + message);
+        this.messagesService.addMessage(user + ': ' + message);
         // this.cdr.detectChanges(); // Trigger change detection
       });
       this.hubconnection.on('userlist', (message) => console.log(message));
