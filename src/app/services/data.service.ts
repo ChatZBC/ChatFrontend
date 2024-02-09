@@ -13,12 +13,14 @@ import { MessagesService } from './messages.service';
 export class DataService {
   hubUrl: string;
   hubconnection?: HubConnection;
-  username = 'TestUser';
+  username: any;
 
-  constructor(
-    private messagesService: MessagesService,
-  ) {
-    this.hubUrl = 'https://localhost:7206/chathub?username=' + this.username;
+  constructor(private messagesService: MessagesService) {
+    this.hubUrl = 'https://localhost:7206/chathub?username=' + this.SetUsername();
+  }
+
+  public SetUsername(): string | null {
+    return sessionStorage.getItem('Username');
   }
 
   public async JoinHub(): Promise<void> {

@@ -22,7 +22,6 @@ export class ChatComponent implements OnInit {
 
   ngOnInit(): void {
     console.log('Connected');
-
     this.dataService.JoinHub();
   }
 
@@ -39,11 +38,4 @@ export class ChatComponent implements OnInit {
   getMessages(): string[] {
     return this.messagesService.messages;
   }
-  // public SendMessage() {
-  //   this.dataService.SendMessage(this.messageText)
-  // }
-
-  // public RequestUserlist(){
-  //   this.userlist = this.dataService.RequestUserList();
-  // }
 }

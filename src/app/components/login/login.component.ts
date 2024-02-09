@@ -23,8 +23,8 @@ export class LoginComponent {
   setUsername(){
     if (this.isValidUsername()) {
       this.invalidUsername = false;
-      this.myService.username = this.username;
-      this.router.navigate(['/'])
+      sessionStorage.setItem('Username',this.username);
+      this.router.navigate(['/Chat'])
     }
     else {
       this.invalidUsername = true;
