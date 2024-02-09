@@ -1,10 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  DefaultHttpClient,
-  HttpTransportType,
-  HubConnection,
-  HubConnectionBuilder,
-} from '@microsoft/signalr';
+import { HubConnection } from '@microsoft/signalr';
 import { DataService } from '../../services/data.service';
 import { MessagesService } from '../../services/messages.service';
 
@@ -18,7 +13,7 @@ export class ChatComponent implements OnInit {
   messageHistory: string[] = [];
   hubconnection?: HubConnection;
 
-  constructor(private dataService: DataService, private messagesService: MessagesService) {}
+  constructor(private dataService: DataService, private messagesService: MessagesService) { }
 
   ngOnInit(): void {
     console.log('Connected');
