@@ -17,16 +17,17 @@ export class DataService {
 
   constructor(private messagesService: MessagesService) {
     // this.hubUrl = 'https://localhost:7206/chathub?username=' + this.SetUsername();
-    this.hubUrl = 'http://192.168.1.246:8080/chatHub?username=' + this.SetUsername();
+    // this.hubUrl = 'http://192.168.1.246:8080/chatHub?username=' + this.SetUsername();
+    this.SetUsername();
+    this.hubUrl = 'http://192.168.1.246:8080/chatHub?username=' + this.username;
   }
 
-  public SetUsername(): string {
+  public async SetUsername() {
     const userName = sessionStorage.getItem('Username')
     if (userName == null){
-      return 'Eroor'
+      this.username = 'Error';
     } else {
       this.username = userName;
-      return userName;
     }
   }
 

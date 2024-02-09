@@ -17,6 +17,7 @@ export class ChatComponent implements OnInit {
 
   ngOnInit(): void {
     console.log('Connected');
+    this.dataService.SetUsername()
     this.dataService.JoinHub();
   }
 
