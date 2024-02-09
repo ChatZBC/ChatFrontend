@@ -11,7 +11,7 @@ import { MessagesService } from './messages.service';
   providedIn: 'root',
 })
 export class DataService {
-  hubUrl: string;
+  hubUrl!: string;
   hubconnection?: HubConnection;
   username: any;
 
@@ -19,19 +19,19 @@ export class DataService {
     // this.hubUrl = 'https://localhost:7206/chathub?username=' + this.SetUsername();
     // this.hubUrl = 'http://192.168.1.246:8080/chatHub?username=' + this.SetUsername();
     this.SetUsername();
-    this.hubUrl = 'http://192.168.1.246:8080/chatHub?username=' + this.username;
   }
 
-  public async SetUsername() {
-    const userName = sessionStorage.getItem('Username')
-    if (userName == null){
-      this.username = 'Error';
+  public async SetUsername(): Promise<void> {
+    const Name = sessionStorage.getItem('Username')
+    if (Name == null){
+      this.username = 'Error'
     } else {
-      this.username = userName;
+      this.username = Name;
     }
   }
 
   public async JoinHub(): Promise<void> {
+    this.hubUrl = 'http://192.168.1.246:8080/chatHub?username=' + this.username;
     try {
       DefaultHttpClient;
       this.hubconnection = new HubConnectionBuilder()
